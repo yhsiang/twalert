@@ -1,0 +1,21 @@
+{
+  "author": "Yuan Hsiang Cheng",
+  "name": "twalert",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./node_modules/brunch/bin/brunch watch --server"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "brunch": "1.5.x",
+    "javascript-brunch": "1.5.x",
+    "css-brunch": "1.5.x",
+    "sass-brunch": "1.5.x",
+    "jade-brunch": "1.4.x",
+    "static-jade-brunch": ">= 1.4.0 <= 1.4.5 || >= 1.4.8 < 1.5",
+    "auto-reload-brunch": "1.5.x",
+    "uglify-js-brunch": "1.3.x",
+    "clean-css-brunch": "1.5.x"  
+  }
+}

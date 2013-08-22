@@ -2,12 +2,16 @@ var http = require('http')
 	, fs = require('fs')
 	,	parseString = require('xml2js').parseString;
 
-var xml = "<root>Hello xml2js!</root>"
-
-//The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
+function kml2json (url) {
+	host = url.split('/')[2];
+	path = url.split(host)[1];
+	if(url.match(/\.kml/))
+		fileName = path.match(/\w+\.kml/)[0].split('.kml')[0]+'.json';
+	else
+		fileName = path.match(/\w+\.ashx/)[0].split('.ashx')[0]+'.json';
 var options = {
-  host: 'fhy2.wra.gov.tw',
-  path: '/PUB_WEB_2011/kml/WRAWarm.kml'
+  host: host,
+  path: path
 };
 
 http.request(options, function (res) {
@@ -17,13 +21,21 @@ http.request(options, function (res) {
 	});
 	res.on('end', function () {
 		parseString(kml, function (err, result) {
-			fs.writeFile("WRAWarm.json", JSON.stringify(result), function(err) {
-    		if(err) {
-     		  console.log(err);
-    		} else {
-        	console.log("The file was saved!");
-    		}	
-			}); 
+			fs.writeFile(fileName, JSON.stringify(result), function(err) {
+				if(err) {
+					console.log(err);
+				} else {
+					console.log("The "+fileName+" was saved!");
+				}	
+			});
 		});
 	})
 }).end();
+//*/
+}
+
+//kml2json('http://fhy2.wra.gov.tw/PUB_WEB_2011/kml/WRAWarm.kml');
+//kml2json('http://fhy.wra.gov.tw/DMCHY/DES/KMLFiles/NewstWaterWarm.kml');
+//kml2json('http://fema1.swcb.gov.tw/google/DebrisAlert.ashx');
+kml2json('http://fema1.swcb.gov.tw/google/DebrisAlertRed.ashx');
+//*/
