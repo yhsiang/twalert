@@ -20,6 +20,9 @@ http.request(options, function (res) {
 		kml += chunk;
 	});
 	res.on('end', function () {
+		kml = kml.replace("\ufeff", "");
+		//kml = kml.replace('<kml>', '<kml xmlns="http://earth.google.com/kml/2.1">');		
+		
 		parseString(kml, function (err, result) {
 			fs.writeFile(fileName, JSON.stringify(result), function(err) {
 				if(err) {
@@ -29,13 +32,14 @@ http.request(options, function (res) {
 				}	
 			});
 		});
+		//*/
 	})
 }).end();
 //*/
 }
 
 //kml2json('http://fhy2.wra.gov.tw/PUB_WEB_2011/kml/WRAWarm.kml');
-//kml2json('http://fhy.wra.gov.tw/DMCHY/DES/KMLFiles/NewstWaterWarm.kml');
+kml2json('http://fhy.wra.gov.tw/DMCHY/DES/KMLFiles/NewstWaterWarm.kml');
 //kml2json('http://fema1.swcb.gov.tw/google/DebrisAlert.ashx');
-kml2json('http://fema1.swcb.gov.tw/google/DebrisAlertRed.ashx');
+//kml2json('http://fema1.swcb.gov.tw/google/DebrisAlertRed.ashx');
 //*/
